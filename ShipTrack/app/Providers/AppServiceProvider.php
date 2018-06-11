@@ -13,7 +13,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishes([
+            base_path('node_modules/admin-lte') => public_path('node_modules/admin-lte'),
+        ], 'public');
+
+        $this->publishes([
+            base_path('node_modules/jquery') => public_path('node_modules/jquery'),
+        ], 'public');
     }
 
     /**

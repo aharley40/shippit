@@ -18,3 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin/orders', 'Admin\OrdersController@index')->name('admin-order-list');
+Route::get('/admin/orderaoeuaouaouoaeuaous/create', 'Admin\OrdersController@create')->name('admin-order-create');
