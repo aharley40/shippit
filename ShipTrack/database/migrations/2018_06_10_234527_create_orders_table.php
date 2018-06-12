@@ -17,8 +17,8 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('client_id');
             $table->datetime('delivery_date');
-            $table->string('description');
-            $table->enum('type', ['Delivery','Pick-up']);
+            $table->string('description')->nullable();
+            $table->enum('type', ['delivery','pickup']);
             $table->timestamps();
         });
     }

@@ -16,12 +16,12 @@ class CreateTrucksTable extends Migration
         Schema::create('trucks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('vin');
-            $table->string('license_plate');
-            $table->string('insurance_provider');
-            $table->string('insurance_number');
-            $table->string('registration_number');
-            $table->string('state_registered');
+            $table->string('vin')->nullable();
+            $table->string('license_plate')->nullable();
+            $table->string('insurance_provider')->nullable();
+            $table->string('insurance_number')->nullable();
+            $table->string('registration_number')->nullable();
+            $table->string('state_registered')->nullable();
             $table->timestamps();
         });
     }
