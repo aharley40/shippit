@@ -18,11 +18,9 @@ class CreateTripsTable extends Migration
             $table->integer('truck_id');
             $table->integer('order_id');
             $table->integer('employee_id');
-            $table->datetime('start_time');
-            $table->datetime('delivery_time');
-            $table->double('current_lat');
-            $table->double('current_long');
-            $table->enum('status', ['On Route', 'Delayed','Cancelled', 'Delivered']);
+            $table->datetime('start_time')->nullable();
+            $table->datetime('delivery_time')->nullable();
+            $table->enum('status', ['queued', 'active','cancelled', 'complete']);
             $table->timestamps();
         });
     }

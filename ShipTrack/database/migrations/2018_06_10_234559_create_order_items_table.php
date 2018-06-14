@@ -18,6 +18,7 @@ class CreateOrderItemsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->double('price', 15, 3);
+            $table->integer('order_id');
             $table->timestamps();
         });
     }

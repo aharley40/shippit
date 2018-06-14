@@ -21,22 +21,22 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+  <nav class="main-header navbar navbar-expand bg-primary navbar-light border-bottom">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/node_modules/admin-lte/index3.html" class="nav-link">Home</a>
+        <a href="/admin/orders" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="/admin/clients" class="nav-link">Clients</a>
       </li>
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
+    {{--<form class="form-inline ml-3">
       <div class="input-group input-group-sm">
         <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
@@ -45,10 +45,10 @@
           </button>
         </div>
       </div>
-    </form>
+    </form>--}}
 
     <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+    {{--<ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -139,19 +139,19 @@
           <i class="fa fa-th-large"></i>
         </a>
       </li>
-    </ul>
+    </ul>--}}
   </nav>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="/node_modules/admin-lte/index3.html" class="brand-link">
+    <a href="/admin" class="brand-link bg-primary">
       <img src="/node_modules/admin-lte/dist/img/AdminLTELogo.png"
            alt="AdminLTE Logo"
            class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">ShipTrack</span>
     </a>
 
     <!-- Sidebar -->
@@ -206,15 +206,39 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/node_modules/admin-lte/index.html" class="nav-link">
+                  <a href="{{route('admin-client-create')}}" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>Create Client</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="../../index2.html" class="nav-link">
+                  <a href="{{route('admin-view-clients')}}" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>View Clients</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-credit-card" aria-hidden="true"></i>
+                <p>
+                  Orders
+                  <i class="right fa fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('admin-order-create')}}" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>Create Order</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin-view-orders')}}" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>View Orders</p>
                   </a>
                 </li>
               </ul>
@@ -230,13 +254,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/node_modules/admin-lte/index.html" class="nav-link">
+                  <a href="{{route('admin-truck-create')}}" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>Create Trucks</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="../../index2.html" class="nav-link">
+                  <a href="{{route('admin-view-trucks')}}" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>View Trucks</p>
                   </a>
@@ -298,46 +322,25 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="/node_modules/admin-lte/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="/node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="/node_modules/admin-lte/plugins/datatables/jquery.dataTables.js"></script>
-<script src="/node_modules/admin-lte/plugins/datatables/dataTables.bootstrap4.js"></script>
-<!-- SlimScroll -->
-<script src="/node_modules/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="/node_modules/admin-lte/plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="/node_modules/admin-lte/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="/node_modules/admin-lte/dist/js/demo.js"></script>
 <!-- page script -->
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "columnDefs": [ {
-          "targets": -1,
-          "render": function (data) {
-            return [
-              "<a href='/admin/orders/" + data + "'><i class='fa fa-eye fa-2x'></i></a>",
-              "<a href='/admin/orders/" + data + "/edit'><i class='fa fa-pencil fa-2x'></i></a>",
-              "<a class='text-danger' href='/admin/orders/" + data + "/delete'><i class='fa fa-trash fa-2x'></i></a>"
-            ].join('');
-          }
-      }, {
-          "targets": -2,
-          "render": function (data) {
-            var date = new Date(parseInt(data) * 1000);
-            console.log(date);
-            date.setMinutes(date.getMinutes() - new Date().getTimezoneOffset());
 
-            return date.toString();
-          }
-            }]
-    });
-  });
-</script>
+@section('footer-js')
+  <!-- jQuery -->
+  <script src="/node_modules/admin-lte/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables -->
+  <script src="/node_modules/admin-lte/plugins/datatables/jquery.dataTables.js"></script>
+  <script src="/node_modules/admin-lte/plugins/datatables/dataTables.bootstrap4.js"></script>
+  <!-- SlimScroll -->
+  <script src="/node_modules/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!-- FastClick -->
+  <script src="/node_modules/admin-lte/plugins/fastclick/fastclick.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/node_modules/admin-lte/dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/node_modules/admin-lte/dist/js/demo.js"></script>
+@show
+
 </body>
 </html>

@@ -54,4 +54,31 @@
 @endsection
 
 
+@section('footer-js')
+	@parent
+	 <script>
+    $(function () {
+      $("#example1").DataTable({
+        "columnDefs": [ {
+            "targets": -1,
+            "render": function (data) {
+              return [
+                "<a href='/admin/orders/" + data + "'><i class='fa fa-eye fa-2x'></i></a>",
+                "<a href='/admin/orders/" + data + "/edit'><i class='fa fa-pencil fa-2x'></i></a>",
+                "<a class='text-danger' href='/admin/orders/" + data + "/delete'><i class='fa fa-trash fa-2x'></i></a>"
+              ].join('');
+            }
+        }, {
+            "targets": -2,
+            "render": function (data) {
+              var date = new Date(parseInt(data) * 1000);
+              console.log(date);
+              date.setMinutes(date.getMinutes() - new Date().getTimezoneOffset());
 
+              return date.toString();
+            }
+              }]
+      });
+    });
+  </script>
+@endsection
