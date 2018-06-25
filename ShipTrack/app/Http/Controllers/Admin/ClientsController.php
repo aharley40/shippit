@@ -43,14 +43,15 @@ class ClientsController extends Controller
     }
 
     public function create(Request $request)
-    {
+    { 
         if ($request->method() == 'POST') {
             return $this->save($request, null);
         }
 
         return view('clients/edit', [
             'action' => route('admin-client-create'),
-            'client' => new Client()
+            'client' => new Client(),
+            'addresses' => []
         ]);
     }
 
@@ -62,11 +63,15 @@ class ClientsController extends Controller
     public function edit(Request $request, $id)
     {
         $client = Client::find($id);
-
+        $addresses = Address::where('client_id', $id)
+            // ->join('addresses', 'clients.primary_address_id', '=', 'addresses.id')
+            // ->select('clients.primary_address_id')
+            ->get();
 
         return view('clients/edit', [
             'action' => route('admin-save-client', ['id' => $id]),
-            'client' => $client
+            'client' => $client,
+            'addresses' => $addresses
         ]);
     }
 
@@ -85,33 +90,41 @@ class ClientsController extends Controller
             'email',
             'phone'
         ]));
+        $client->save();
+        $savedAddressIDs = [];
 
         foreach ($request->addresses as $key => $address) {
             $dbAddress = Address::find($key);
 
-            if ($dbAddress) {
+            if (!$dbAddress) {
                 $dbAddress = new Address();
             }
 
-            $dbAddress->fill([
-                'title',
-                'address_1',
-                'address_2',
-                'city',
-                'state',
-                'postal'
-            ]);
+            $dbAddress->fill($address);
+            $dbAddress->client_id = $client->id;
 
             $dbAddress->save();
+            $savedAddressIDs[] = $dbAddress->id;
 
-            if ($address->primary_address) {
-                $primary_address_id = $address->primary_address;
+            if ($request->primary_address) {
+
+                if (substr($request->primary_address, 0,3) == 'new') {
+                    $primary_address_id = $dbAddress->id;
+                } else {
+                    $primary_address_id = $request->primary_address;
+                }
             }
         }
+
+        $deletionIds = Address::where('client_id', $client->id)
+            ->whereNotIn('id', $savedAddressIDs)
+            ->pluck('id');
+
+        Address::whereIn('id', $deletionIds)->delete();
 
         $client->primary_address_id = $primary_address_id;
         $client->save();
 
-        return redirect('trucks');
+        return redirect('clients');
     }
 }

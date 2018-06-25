@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Client;
+use App\Models\OrderItem;
 
 
 class OrdersController extends Controller
@@ -43,13 +45,17 @@ class OrdersController extends Controller
 
     public function create(Request $request)
     {
+        $clients = Client::all();
+
         if ($request->method() == 'POST') {
             return $this->save($request, null);
         }
 
         return view('orders/edit', [
             'action' => route('admin-order-create'),
-            'order' => new Order()
+            'order' => new Order(),
+            'orderItems' => [],
+            'clients' => $clients
         ]);
     }
 
@@ -61,11 +67,19 @@ class OrdersController extends Controller
     public function edit(Request $request, $id)
     {
         $order = Order::find($id);
+        $clients = Client::all();
 
+        $orderItems = OrderItem::where('order_id', $id)
+        ->get();
+
+        // var_dump($order);
+        // die('hello');
 
         return view('orders/edit', [
             'action' => route('admin-save-order', ['id' => $id]),
-            'order' => $order
+            'order' => $order,
+            'clients' => $clients,
+            'orderItems' => $orderItems
         ]);
     }
 
@@ -79,23 +93,28 @@ class OrdersController extends Controller
         $order = $id ? Order::where('id', $id)->first() : new Order();
         $primary_address_id = null;
 
+
+
         $order->fill($request->only([
             'client_id',
-            'delivery_date',
             'description',
             'type'
         ]));
+        $order->delivery_date = date('Y-m-d g:i:s',strtotime($request->delivery_date));
 
         $order->save();
 
         foreach ($request->orderItems as $key => $orderItem) {
             $dbItem = OrderItem::find($key);
 
-            if ($dbItem) {
+            if (!$dbItem) {
                 $dbItem = new OrderItem();
             }
 
+            $dbItem->fill($orderItem);
             $dbItem->order_id = $order->id;
+
+            $dbItem->save();
 
             $dbItem->fill([
                 'title' => $orderItem['title'],
@@ -106,6 +125,6 @@ class OrdersController extends Controller
             $dbItem->save();
         }
 
-        return redirect('trucks');
+        return redirect('orders');
     }
 }

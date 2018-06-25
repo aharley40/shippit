@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('client_id');
+            $table->integer('client_id')->nullable();
             $table->datetime('delivery_date');
             $table->string('description')->nullable();
             $table->enum('type', ['delivery','pickup']);

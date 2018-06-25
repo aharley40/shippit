@@ -1,7 +1,7 @@
 Vagrant.configure(2) do |config|
 	config.vm.box = "ubuntu/bionic64"
 	
-	config.vm.network "private_network", ip: '192.161.235.148'
+	config.vm.network "private_network", ip: '192.168.68.8'
 	
  	config.vm.synced_folder "./", "/var/www/html" , :group => "www-data", :mount_options => ['dmode=775','fmode=664']
 

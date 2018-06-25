@@ -182,13 +182,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/node_modules/admin-lte/index.html" class="nav-link">
+                  <a href="{{route('admin-user-create')}}" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>Create User</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="../../index2.html" class="nav-link">
+                  <a href="{{route('admin-view-users')}}" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>View Users</p>
                   </a>
